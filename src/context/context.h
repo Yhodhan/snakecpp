@@ -1,3 +1,4 @@
+#include "display.h"
 #include <cstdint>
 #include <vector>
 
@@ -6,18 +7,22 @@ struct Position {
   uint32_t y;
 };
 
-enum class State { Paused, Playing, End };
+enum State { Paused, Playing, End };
 
-enum class PlayerMove { Left, Right, Up, Down };
+enum PlayerMove { Left, Right, Up, Down };
 
 class Context {
 public:
   Context();
   ~Context();
-  void init_game();
+  void cycle();
 
 private:
   std::vector<Position> player_position;
   Position food_position;
   State game_state;
+  PlayerMove direction;
+  Display *display;
+  // helper functions
+  void update_game();
 };

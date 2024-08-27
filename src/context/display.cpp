@@ -1,4 +1,5 @@
 #include "display.h"
+#include <SDL2/SDL_render.h>
 
 static inline void sdl_error() {
   std::cerr << "Error initializing SDL: " << SDL_GetError() << std::endl;
@@ -23,6 +24,12 @@ Display::Display() {
   events();
 }
 
+void Display::draw() {
+  SDL_RenderClear(render);
+  SDL_SetRenderDrawColor(render, 255, 0, 100, 0);
+  SDL_RenderPresent(render);
+}
+
 void Display::events() {
   bool close = false;
   while (!close) {
@@ -32,6 +39,9 @@ void Display::events() {
       switch (event.type) {
       case SDL_QUIT:
         close = true;
+        break;
+      default:
+        draw();
         break;
       }
     }

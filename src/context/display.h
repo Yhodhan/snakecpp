@@ -12,6 +12,7 @@ public:
   Display();
   ~Display();
   void events();
+  void draw();
 
 private:
   SDL_Window *win;
