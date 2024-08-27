@@ -1,1 +1,0 @@
-/usr/bin/c++ -rdynamic CMakeFiles/snake.dir/src/display/display.cpp.o CMakeFiles/snake.dir/src/main.cpp.o -o snake  -L/usr/lib/x86_64-linux-gnu  -lSDL2 

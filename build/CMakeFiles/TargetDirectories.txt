@@ -1,3 +1,0 @@
-/home/garuda/snacpp/build/CMakeFiles/snake.dir
-/home/garuda/snacpp/build/CMakeFiles/edit_cache.dir
-/home/garuda/snacpp/build/CMakeFiles/rebuild_cache.dir
