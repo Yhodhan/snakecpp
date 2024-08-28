@@ -9,13 +9,10 @@
 #include <iostream>
 #include <vector>
 
-class Display;
-
 class Context {
 public:
   Context();
   ~Context();
-  void cycle();
   // getters
   std::vector<Position> position() { return player_position; }
   State state() { return game_state; }
@@ -25,24 +22,25 @@ private:
   Position food_position;
   State game_state;
   PlayerMove direction;
-  Display *display;
   // helper functions
   void update_game();
 };
 
 class Display {
 public:
-  Display();
+  Display(Context *c);
   ~Display();
   void draw_background();
-  void draw(Context *context);
-  void events(Context *context);
-  void draw_food(Context *context);
-  void draw_player(Context *context);
+  void draw_dot(Position p);
+  void draw();
+  void events();
+  void draw_food();
+  void draw_player();
 
 private:
   SDL_Window *win;
   int width = 1280;
   int height = 640;
   SDL_Renderer *render;
+  Context *context;
 };
