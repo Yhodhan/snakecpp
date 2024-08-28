@@ -3,7 +3,9 @@
 #include <iostream>
 
 int main() {
-  std::unique_ptr<Context> game(new Context);
-  game->cycle();
+  Context* game(new Context);
+  std::unique_ptr<Display> display(New Display(context));
+
+  display->events();
   return 0;
 }
