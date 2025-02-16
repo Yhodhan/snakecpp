@@ -1,11 +1,25 @@
 #include "context/context.h"
-#include <memory>
 #include <iostream>
+#include <memory>
+
+void run_game(Display *display, Context *game) {
+
+  loop {
+
+    game->update_game();
+    display->draw();
+
+    if (!display->events())
+      break;
+  }
+}
 
 int main() {
-  Context* game(new Context);
+  std::unique_ptr<Context> game(new Context);
   std::unique_ptr<Display> display(new Display(game));
 
-  display->events();
+  // game loop
+  run_game(display, game);
+
   return 0;
 }

@@ -31,7 +31,7 @@ $(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) -c $^ -o $@
 
 run:
-	$(BUILD)/snake
+	@ $(BUILD)/snake
 
 clean:
 	rm -rf $(BUILD) $(OBJS)

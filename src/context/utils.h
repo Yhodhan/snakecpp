@@ -10,6 +10,8 @@
 #include <iostream>
 #include <vector>
 
+#define loop for(;;)
+
 struct Position {
   int x;
   int y;

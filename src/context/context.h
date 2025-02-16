@@ -2,13 +2,13 @@
 
 #define SDL_MAIN_HANDLED
 
-#include <SDL2/SDL_stdinc.h>
+#include "utils.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_error.h>
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_render.h>
-#include "utils.h"
+#include <SDL2/SDL_stdinc.h>
 
 class Context {
 public:
@@ -17,14 +17,13 @@ public:
   // getters
   std::vector<Position> position() { return player_position; }
   State state() { return game_state; }
+  void update_game();
 
 private:
   std::vector<Position> player_position;
   Position food_position;
   State game_state;
   PlayerMove direction;
-  // helper functions
-  void update_game();
 };
 
 class Display {
@@ -34,7 +33,7 @@ public:
   void draw_background();
   void draw_dot(Position p);
   void draw();
-  void events();
+  bool events();
   void draw_food();
   void draw_player();
 

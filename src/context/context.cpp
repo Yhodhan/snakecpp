@@ -58,18 +58,35 @@ void Display::draw() {
   SDL_RenderPresent(render);
 }
 
-void Display::events() {
-  bool close = false;
-  while (!close) {
-    SDL_Event event;
+bool Display::events() {
+  bool running = true;
+  SDL_Event event;
 
-    while (SDL_PollEvent(&event)) {
-      switch (event.type) {
-      case SDL_QUIT: close = true;break;
-      default: draw();break;
+  while (SDL_PollEvent(&event)) {
+    switch (event.type) {
+    case SDL_QUIT:running = false;break;
+    case SDL_KEYDOWN: {
+      switch (event.key.keysym.sym) {
+      SDLK_a:
+        context->position = PlayerMove::Left;
+        break;
+      SDLK_w:
+        context->position = PlayerMove::Up;
+        break;
+      SDLK_d:
+        context->position = PlayerMove::Right;
+        break;
+      SDLK_s:
+        context->position = PlayerMove::Down;
+        break;
+      default:
+        break;
       }
+    } break;
+    default:break;
     }
   }
+  return true;
 }
 
 // ---------------------
