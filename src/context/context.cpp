@@ -1,10 +1,9 @@
 #include "context.h"
-#include <SDL2/SDL_render.h>
 
 // ---------------------
 // Display class logic
 // ---------------------
-static inline void sdl_error() {
+void sdl_error() {
   std::cerr << "Error initializing SDL: " << SDL_GetError() << std::endl;
   exit(EXIT_FAILURE);
 }
@@ -17,6 +16,7 @@ Display::~Display() {
 }
 
 Display::Display(Context *c) : context(c) {
+  SDL_SetMainReady();
   if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
     sdl_error();
 
@@ -65,12 +65,8 @@ void Display::events() {
 
     while (SDL_PollEvent(&event)) {
       switch (event.type) {
-      case SDL_QUIT:
-        close = true;
-        break;
-      default:
-        draw();
-        break;
+      case SDL_QUIT: close = true;break;
+      default: draw();break;
       }
     }
   }

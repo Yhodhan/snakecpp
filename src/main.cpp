@@ -4,7 +4,7 @@
 
 int main() {
   Context* game(new Context);
-  std::unique_ptr<Display> display(New Display(context));
+  std::unique_ptr<Display> display(new Display(game));
 
   display->events();
   return 0;
