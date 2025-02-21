@@ -67,17 +67,17 @@ bool Display::events() {
     case SDL_QUIT:running = false;break;
     case SDL_KEYDOWN: {
       switch (event.key.keysym.sym) {
-      SDLK_a:
-        context->position = PlayerMove::Left;
+      case SDLK_a:
+        context->direction = PlayerMove::Left;
         break;
-      SDLK_w:
-        context->position = PlayerMove::Up;
+      case SDLK_w:
+        context->direction = PlayerMove::Up;
         break;
-      SDLK_d:
-        context->position = PlayerMove::Right;
+      case SDLK_d:
+        context->direction = PlayerMove::Right;
         break;
-      SDLK_s:
-        context->position = PlayerMove::Down;
+      case SDLK_s:
+        context->direction = PlayerMove::Down;
         break;
       default:
         break;
@@ -86,7 +86,7 @@ bool Display::events() {
     default:break;
     }
   }
-  return true;
+  return running;
 }
 
 // ---------------------

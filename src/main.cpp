@@ -15,11 +15,14 @@ void run_game(Display *display, Context *game) {
 }
 
 int main() {
-  std::unique_ptr<Context> game(new Context);
-  std::unique_ptr<Display> display(new Display(game));
+  Context *game(new Context);
+  Display *display(new Display(game));
 
   // game loop
   run_game(display, game);
+
+  delete game;
+  delete display;
 
   return 0;
 }

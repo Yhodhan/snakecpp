@@ -20,6 +20,7 @@ public:
   void update_game();
 
 private:
+  friend class Display;
   std::vector<Position> player_position;
   Position food_position;
   State game_state;
