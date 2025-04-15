@@ -9,6 +9,7 @@
 #include <SDL2/SDL_pixels.h>
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_stdinc.h>
+#include <SDL2/SDL_keycode.h>
 #include <algorithm>
 #include <iostream>
 #include <vector>
@@ -19,6 +20,8 @@ struct Position {
   int x;
   int y;
 };
+
+class Display;
 
 enum State { Paused, Playing, End };
 enum PlayerMove { Left, Right, Up, Down };
