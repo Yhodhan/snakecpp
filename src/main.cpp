@@ -1,16 +1,33 @@
 #include "context/context.h"
-#include <iostream>
-#include <memory>
+#include <chrono>
+#include <thread>
+
+#define CLOCK_CYCLE 200
+
+inline void simulate_await_cycle() {
+  std::this_thread::sleep_for(std::chrono::milliseconds(CLOCK_CYCLE));
+}
+
+void next_tick(Context *game) {
+  switch (game->state()) {
+  case State::Playing:
+    game->update_game();
+    break;
+  default:
+    return;
+  }
+}
 
 void run_game(Display *display, Context *game) {
 
   loop {
 
-    game->update_game();
-    display->draw();
-
     if (!display->events())
       break;
+
+    simulate_await_cycle();
+    next_tick(game);
+    display->draw();
   }
 }
 

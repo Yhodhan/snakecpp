@@ -1,8 +1,10 @@
 #include "context.h"
+#include <SDL2/SDL_keycode.h>
 
 // ---------------------
 // Display class logic
 // ---------------------
+
 void sdl_error() {
   std::cerr << "Error initializing SDL: " << SDL_GetError() << std::endl;
   exit(EXIT_FAILURE);
@@ -36,11 +38,21 @@ void Display::draw_dot(Position p) {
       .h = 20,
   };
 
-  SDL_RenderDrawRect(render, &rect);
   SDL_RenderFillRect(render, &rect);
 }
 
-void Display::draw_background() { SDL_SetRenderDrawColor(render, 0, 0, 0, 0); }
+void Display::draw_background() {
+
+  switch (context->state()) {
+  case State::Playing:
+    SDL_SetRenderDrawColor(render, 0, 0, 0, 0);
+    break;
+  default:
+    SDL_SetRenderDrawColor(render, 30, 30, 30, 30);
+  }
+
+  SDL_RenderClear(render);
+}
 
 void Display::draw_player() {
   SDL_SetRenderDrawColor(render, 0, 255, 0, 255);
@@ -58,32 +70,52 @@ void Display::draw() {
   SDL_RenderPresent(render);
 }
 
+void Display::change_pause_status() {
+  switch (context->game_state) {
+  case State::Paused:
+    context->game_state = State::Playing;
+    break;
+  default:
+    context->game_state = State::Paused;
+  }
+}
+
 bool Display::events() {
   bool running = true;
   SDL_Event event;
 
   while (SDL_PollEvent(&event)) {
     switch (event.type) {
-    case SDL_QUIT:running = false;break;
+    case SDL_QUIT:
+      running = false;
+      break;
     case SDL_KEYDOWN: {
       switch (event.key.keysym.sym) {
+      case SDLK_h:
       case SDLK_a:
         context->direction = PlayerMove::Left;
         break;
+      case SDLK_k:
       case SDLK_w:
         context->direction = PlayerMove::Up;
         break;
+      case SDLK_l:
       case SDLK_d:
         context->direction = PlayerMove::Right;
         break;
+      case SDLK_j:
       case SDLK_s:
         context->direction = PlayerMove::Down;
+        break;
+      case SDLK_ESCAPE:
+        change_pause_status();
         break;
       default:
         break;
       }
     } break;
-    default:break;
+    default:
+      break;
     }
   }
   return running;
@@ -101,21 +133,27 @@ Context::Context()
 Context::~Context() {}
 
 void Context::update_game() {
+
   Position current_head_position = this->player_position.front();
   Position new_position = {0, 0};
+
   switch (this->direction) {
   case PlayerMove::Up:
     new_position.x = current_head_position.x;
-    new_position.y = current_head_position.y + 1;
+    new_position.y = current_head_position.y - 1;
+    break;
   case PlayerMove::Down:
     new_position.x = current_head_position.x;
-    new_position.y = current_head_position.y - 1;
+    new_position.y = current_head_position.y + 1;
+    break;
   case PlayerMove::Right:
     new_position.x = current_head_position.x + 1;
     new_position.y = current_head_position.y;
+    break;
   case PlayerMove::Left:
     new_position.x = current_head_position.x - 1;
     new_position.y = current_head_position.y;
+    break;
   }
 
   // TODO: check collisions with the end of the map and if food has been eaten

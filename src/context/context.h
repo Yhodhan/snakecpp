@@ -3,12 +3,6 @@
 #define SDL_MAIN_HANDLED
 
 #include "utils.h"
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_error.h>
-#include <SDL2/SDL_events.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_render.h>
-#include <SDL2/SDL_stdinc.h>
 
 class Context {
 public:
@@ -37,6 +31,7 @@ public:
   bool events();
   void draw_food();
   void draw_player();
+  void change_pause_status();
 
 private:
   SDL_Window *win;

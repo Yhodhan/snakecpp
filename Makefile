@@ -1,4 +1,4 @@
-.PHONY: all run clean
+.PHONY: all run clean debug
 
 BUILD = build
 TARGET = $(BUILD)/snake
@@ -15,11 +15,14 @@ else
 	LIBS= -lSDL2 -lSDL2_image
 endif
 
-CXXFLAGS = --std=c++20  -Wall -Wformat -Werror
+CXXFLAGS = --std=c++20  -Wall -Wformat -Werror -g
 
 # ===================
 #    TARGET RULES
 # ===================
+
+run: all
+	@ $(BUILD)/snake
 
 all: $(TARGET)
 
@@ -30,8 +33,8 @@ $(TARGET): $(OBJS)
 %.o : %.cpp
 	$(CXX) $(CXXFLAGS) -c $^ -o $@
 
-run:
-	@ $(BUILD)/snake
-
 clean:
 	rm -rf $(BUILD) $(OBJS)
+
+debug:
+	gdb ./build/snake

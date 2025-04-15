@@ -6,11 +6,14 @@
 #include <SDL2/SDL_error.h>
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_pixels.h>
 #include <SDL2/SDL_render.h>
+#include <SDL2/SDL_stdinc.h>
+#include <algorithm>
 #include <iostream>
 #include <vector>
 
-#define loop for(;;)
+#define loop for (;;)
 
 struct Position {
   int x;
