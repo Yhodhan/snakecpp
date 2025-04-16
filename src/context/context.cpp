@@ -12,6 +12,14 @@ Context::Context()
 Context::~Context() {}
 
 void Context::check_position(Position current_position) {
+  // check snake does not collide with itself
+  for (Position position : this->player_position) {
+    if (position.x == current_position.x and position.y == current_position.y) {
+      this->game_state = State::End;
+      return;
+    }
+  }
+
   if (current_position.x > GRID_WIDTH or current_position.x < 0 or
       current_position.y > GRID_HEIGHT or current_position.y < 0)
     this->game_state = State::End;
@@ -23,7 +31,8 @@ void Context::feed(Position current_head) {
     int y_food = rand() % GRID_HEIGHT;
     Position new_food_position({x_food, y_food});
 
-    this->player_position.insert(this->player_position.begin(), this->food_position);
+    this->player_position.insert(this->player_position.begin(),
+                                 this->food_position);
     this->food_position = new_food_position;
   }
 }
@@ -52,9 +61,8 @@ void Context::update_game() {
     break;
   }
 
-  // spawn new food
-  feed(new_position);
   check_position(new_position);
+  feed(new_position);
 
   // remove last position and insert new one
   this->player_position.pop_back();
