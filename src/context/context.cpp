@@ -11,6 +11,23 @@ Context::Context()
 
 Context::~Context() {}
 
+void Context::check_position(Position current_position) {
+  if (current_position.x > GRID_WIDTH or current_position.x < 0 or
+      current_position.y > GRID_HEIGHT or current_position.y < 0)
+    this->game_state = State::End;
+}
+
+void Context::feed(Position current_head) {
+  if (current_head.x == food_position.x and current_head.y == food_position.y) {
+    int x_food = rand() % GRID_WIDTH;
+    int y_food = rand() % GRID_HEIGHT;
+    Position new_food_position({x_food, y_food});
+
+    this->player_position.insert(this->player_position.begin(), this->food_position);
+    this->food_position = new_food_position;
+  }
+}
+
 void Context::update_game() {
 
   Position current_head_position = this->player_position.front();
@@ -35,12 +52,11 @@ void Context::update_game() {
     break;
   }
 
-  // TODO: check collisions with the end of the map and if food has been eaten
-  // check_position()
+  // spawn new food
+  feed(new_position);
+  check_position(new_position);
 
   // remove last position and insert new one
   this->player_position.pop_back();
   this->player_position.insert(this->player_position.begin(), new_position);
-
-  // spawn new food
 }

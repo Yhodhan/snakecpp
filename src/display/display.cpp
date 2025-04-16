@@ -1,4 +1,6 @@
 #include "display.h"
+#include <SDL2/SDL_keycode.h>
+#include <SDL2/SDL_render.h>
 
 // ---------------------
 // Display class logic
@@ -31,17 +33,16 @@ Display::Display(Context *c) : context(c) {
 void Display::draw_dot(Position p) {
   // create the rect from the point
   SDL_Rect rect = SDL_Rect{
-      .x = (int)p.x * 20,
-      .y = (int)p.y * 20,
-      .w = 20,
-      .h = 20,
+      .x = (int)p.x * DOT_SIZE_IN_PXS,
+      .y = (int)p.y * DOT_SIZE_IN_PXS,
+      .w = DOT_SIZE_IN_PXS,
+      .h = DOT_SIZE_IN_PXS,
   };
 
   SDL_RenderFillRect(render, &rect);
 }
 
 void Display::draw_background() {
-
   switch (context->state()) {
   case State::Playing:
     SDL_SetRenderDrawColor(render, 0, 0, 0, 0);
@@ -60,10 +61,17 @@ void Display::draw_player() {
     draw_dot(p);
 }
 
+void Display::draw_food() {
+  Position food = context->food_position;
+  SDL_SetRenderDrawColor(render, 255, 0, 0, 255);
+  draw_dot(food);
+}
+
 void Display::draw() {
   SDL_RenderClear(render);
 
   draw_background();
+  draw_food();
   draw_player();
 
   SDL_RenderPresent(render);
@@ -105,6 +113,9 @@ bool Display::events() {
       case SDLK_j:
       case SDLK_s:
         context->direction = PlayerMove::Down;
+        break;
+      case SDLK_q:
+        running = false;
         break;
       case SDLK_ESCAPE:
         change_pause_status();

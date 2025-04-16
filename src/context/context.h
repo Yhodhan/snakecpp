@@ -1,7 +1,5 @@
 #pragma once
 
-#define SDL_MAIN_HANDLED
-
 #include "../utils.h"
 
 class Context {
@@ -12,6 +10,8 @@ public:
   std::vector<Position> position() { return player_position; }
   State state() { return game_state; }
   void update_game();
+  void check_position(Position current_position);
+  void feed(Position current_head);
 
 private:
   friend class Display;

@@ -3,7 +3,7 @@
 #include <chrono>
 #include <thread>
 
-#define CLOCK_CYCLE 200
+#define CLOCK_CYCLE 150
 
 inline void simulate_await_cycle() {
   std::this_thread::sleep_for(std::chrono::milliseconds(CLOCK_CYCLE));
@@ -20,9 +20,7 @@ void next_tick(Context *game) {
 }
 
 void run_game(Display *display, Context *game) {
-
   loop {
-
     if (!display->events())
       break;
 
@@ -39,7 +37,6 @@ int main() {
   // game loop
   run_game(display, game);
 
-  delete game;
   delete display;
 
   return 0;

@@ -1,7 +1,5 @@
 #pragma once
 
-#define SDL_MAIN_HANDLE
-
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_error.h>
 #include <SDL2/SDL_events.h>
@@ -13,8 +11,13 @@
 #include <algorithm>
 #include <iostream>
 #include <vector>
+#include <cstdlib>
 
 #define loop for (;;)
+
+#define DOT_SIZE_IN_PXS 20
+#define GRID_WIDTH 40
+#define GRID_HEIGHT 30
 
 struct Position {
   int x;

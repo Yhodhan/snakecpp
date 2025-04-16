@@ -1,5 +1,5 @@
-#include "../utils.h"
 #include "../context/context.h"
+#include "../utils.h"
 
 class Display {
 public:
@@ -15,8 +15,8 @@ public:
 
 private:
   SDL_Window *win;
-  int width = 1280;
-  int height = 640;
+  int width = GRID_WIDTH * DOT_SIZE_IN_PXS;
+  int height = GRID_HEIGHT * DOT_SIZE_IN_PXS;
   SDL_Renderer *render;
   Context *context;
 };
